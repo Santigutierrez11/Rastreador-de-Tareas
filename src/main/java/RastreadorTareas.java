@@ -1,10 +1,3 @@
-import org.json.JSONObject;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.util.Date;
 import java.util.Scanner;
 
 public class RastreadorTareas {
@@ -14,35 +7,32 @@ public class RastreadorTareas {
         Scanner in = new Scanner(System.in);
         int respuesta;
 
-        menu();
-        respuesta = Integer.parseInt(in.nextLine());
-        
-
-
-        try {
-            File file = new File(FILE_PATH);
-            JSONObject json;
-
-            if (file.exists()) {
-                String content = new String(Files.readAllBytes(file.toPath())); // lee el contenido como texto
-                json = new JSONObject(content); // lo convierte en un objeto JSONObjete para manipularlo
-                System.out.println("El archivo ya existe");
-            } else {
-                json = new JSONObject(); // Crea un archivo vacio
-                json.put("id", 1);
-                json.put("descripcion", "");
-                json.put("estado", "Sin iniciar");
-                json.put("creado", new Date());
-                json.put("actualizado", new Date());
+        do {
+            menu();
+            respuesta = Integer.parseInt(in.nextLine());
+            switch(respuesta){
+                case 1:
+                    System.out.println("Listar tareas");
+                    break;
+                case 2:
+                    System.out.println("Modificar tarea");
+                    break;
+                case 3:
+                    System.out.println("Crear tarea");
+                    break;
+                case 4:
+                    System.out.println("Eliminar tarea");
+                    break;
+                case 5:
+                    System.out.println("Salir");
+                    break;
+                default:
+                    System.out.println("Opcion invalida");
             }
+            System.out.println();
+        } while (respuesta != 5);
 
-            try (FileWriter writer = new FileWriter(FILE_PATH)) {
-                writer.write(json.toString(4)); // Escribe el contenido del json en el archivo
-                System.out.println("Correcto");
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+
     }
 
     public static void menu(){
