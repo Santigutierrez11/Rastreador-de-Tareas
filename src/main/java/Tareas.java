@@ -1,18 +1,15 @@
 import java.util.Date;
 
 public class Tareas {
-    private static int id;
     private int idTarea;
     private String descripcion;
     private String estado;
     private String creado;
     private String modificado;
 
-    public Tareas(){
-        this.idTarea = ++Tareas.id;
-    }
-    public Tareas(String descripcion, String estado, String creado, String modificado){
-        this();
+    public Tareas(){}
+    public Tareas(int idTarea, String descripcion, String estado, String creado, String modificado){
+        this.idTarea = idTarea;
         this.descripcion = descripcion;
         this.estado = estado;
         this.creado = creado;
@@ -55,7 +52,7 @@ public class Tareas {
     public String toString() {
         return "Tareas" +
                 "{" +
-                "\n\tid: " + Tareas.id + '\n' +
+                "\n\tid: " + this.idTarea + '\n' +
                 "\tdescripcion='" + this.descripcion + '\n' +
                 "\testado='" + this.estado + '\n' +
                 "\tcreado=" + this.creado + '\n' +

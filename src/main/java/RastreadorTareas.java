@@ -100,6 +100,7 @@ public class RastreadorTareas {
 
     public static void agregarTarea(){
         Scanner in = new Scanner(System.in);
+        int idTarea = 0;
         ObjectMapper mapper = new ObjectMapper();
         List<Tareas> tareasLista = new ArrayList<>();
 
@@ -108,6 +109,7 @@ public class RastreadorTareas {
 
             if(archivo.exists() && archivo.length() > 0){
                 tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+
             }
 
             System.out.print("Ingresa la descripción: ");
@@ -138,7 +140,7 @@ public class RastreadorTareas {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String creado = formatoFecha.format(fechaActual);
 
-            Tareas tarea = new Tareas(descripcion, estado, creado, creado);
+            Tareas tarea = new Tareas(1, descripcion, estado, creado, creado);
             tareasLista.add(tarea);
 
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
