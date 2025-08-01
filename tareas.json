@@ -1,6 +1,7 @@
 {
-  "descripcion" : "Estudias Curso de Udemy de Python",
+  "idTarea" : 1,
+  "descripcion" : "Estudiar Curso de Udemy",
   "estado" : "Sin iniciar",
-  "creado" : "01/08/2025 09:39:29",
-  "modificado" : "01/08/2025 09:39:29"
+  "creado" : "01/08/2025 11:10:49",
+  "modificado" : "01/08/2025 11:10:49"
 }

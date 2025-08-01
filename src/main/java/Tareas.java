@@ -2,13 +2,14 @@ import java.util.Date;
 
 public class Tareas {
     private static int id;
+    private int idTarea;
     private String descripcion;
     private String estado;
     private String creado;
     private String modificado;
 
     public Tareas(){
-        Tareas.id++;
+        this.idTarea = ++Tareas.id;
     }
     public Tareas(String descripcion, String estado, String creado, String modificado){
         this();
@@ -18,8 +19,8 @@ public class Tareas {
         this.modificado = modificado;
     }
 
-    public static int getId() {
-        return Tareas.id;
+    public int getIdTarea() {
+        return this.idTarea;
     }
 
     public String getDescripcion() {
