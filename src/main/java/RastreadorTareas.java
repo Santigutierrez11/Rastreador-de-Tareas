@@ -3,12 +3,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 import java.text.SimpleDateFormat;
-import java.util.List;
-
-import java.util.Scanner;
 
 public class RastreadorTareas {
     private static final String FILE_PATH = "tareas.json";
@@ -83,41 +79,50 @@ public class RastreadorTareas {
     public static void agregarTarea(){
         Scanner in = new Scanner(System.in);
         ObjectMapper mapper = new ObjectMapper();
-
-        System.out.print("Ingresa la descripción: ");
-        String descripcion = in.nextLine();
-        String estado;
-
-        while(true){
-            byte estadoResultado = estados();
-            if(estadoResultado >= 1 && estadoResultado <= 3){
-                switch(estadoResultado){
-                    case 1:
-                        estado = "Sin iniciar";
-                        break;
-                    case 2:
-                        estado = "En progreso";
-                        break;
-                    default:
-                        estado = "Terminada";
-                        break;
-                }
-                break;
-            } else {
-                System.out.println("Opción no valida");
-            }
-        }
-
-        Date fechaActual = new Date();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String creado = formatoFecha.format(fechaActual);
-
-        Tareas tarea = new Tareas(descripcion, estado, creado, creado);
+        List<Tareas> tareasLista = new ArrayList<>();
 
         try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(FILE_PATH), tarea);
+            File archivo = new File(FILE_PATH);
+
+            if(archivo.exists() && archivo.length() > 0){
+                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+            }
+
+            System.out.print("Ingresa la descripción: ");
+            String descripcion = in.nextLine();
+            String estado;
+
+            while(true){
+                byte estadoResultado = estados();
+                if(estadoResultado >= 1 && estadoResultado <= 3){
+                    switch(estadoResultado){
+                        case 1:
+                            estado = "Sin iniciar";
+                            break;
+                        case 2:
+                            estado = "En progreso";
+                            break;
+                        default:
+                            estado = "Terminada";
+                            break;
+                    }
+                    break;
+                } else {
+                    System.out.println("Opción no valida");
+                }
+            }
+
+            Date fechaActual = new Date();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String creado = formatoFecha.format(fechaActual);
+
+            Tareas tarea = new Tareas(descripcion, estado, creado, creado);
+            tareasLista.add(tarea);
+
+            mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
             System.out.println("Tarea agregada :)");
         } catch (IOException e){
+            System.err.println("Error al procesar el archivo: JSON: ");
             e.printStackTrace();
         }
     }

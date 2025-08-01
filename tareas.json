@@ -1,7 +1,19 @@
-{
+[ {
   "idTarea" : 1,
-  "descripcion" : "Estudiar Curso de Udemy",
+  "descripcion" : "Estudiar en Udemy",
+  "estado" : "En progreso",
+  "creado" : "01/08/2025 12:07:17",
+  "modificado" : "01/08/2025 12:07:17"
+}, {
+  "idTarea" : 3,
+  "descripcion" : "Practicar lo aprendido",
   "estado" : "Sin iniciar",
-  "creado" : "01/08/2025 11:10:49",
-  "modificado" : "01/08/2025 11:10:49"
-}
+  "creado" : "01/08/2025 12:09:03",
+  "modificado" : "01/08/2025 12:09:03"
+}, {
+  "idTarea" : 3,
+  "descripcion" : "Organizar los cursos de udemy para estudiar",
+  "estado" : "Sin iniciar",
+  "creado" : "01/08/2025 12:10:27",
+  "modificado" : "01/08/2025 12:10:27"
+} ]
