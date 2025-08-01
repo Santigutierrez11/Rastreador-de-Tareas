@@ -36,13 +36,13 @@ public class RastreadorTareas {
     }
 
     public static void menu(){
-        System.out.println("**** Rastreador de Tareas ****");
-        System.out.println("\n+-------------------+");
-        System.out.println("\n|1. Listar tareas   |");
-        System.out.println("\n|2. Modificar tarea |");
-        System.out.println("\n|3. Crear tarea     |");
-        System.out.println("\n|4. Eliminar tarea  |");
-        System.out.println("\n|5. Salir           |");
+        System.out.print("**** Rastreador de Tareas ****");
+        System.out.print("\n+-------------------+");
+        System.out.print("\n|1. Listar tareas   |");
+        System.out.print("\n|2. Modificar tarea |");
+        System.out.print("\n|3. Crear tarea     |");
+        System.out.print("\n|4. Eliminar tarea  |");
+        System.out.print("\n|5. Salir           |");
         System.out.println("\n+-------------------+");
         System.out.print("\nSeleccione una opción: ");
     }
