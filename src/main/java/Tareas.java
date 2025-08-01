@@ -53,12 +53,13 @@ public class Tareas {
 
     @Override
     public String toString() {
-        return "Tareas{" +
-                "id: " + Tareas.id + '\n' +
-                "descripcion='" + this.descripcion + '\n' +
-                ", estado='" + this.estado + '\n' +
-                ", creado=" + this.creado + '\n' +
-                ", modificado=" + this.modificado + '\n' +
+        return "Tareas" +
+                "{" +
+                "\n\tid: " + Tareas.id + '\n' +
+                "\tdescripcion='" + this.descripcion + '\n' +
+                "\testado='" + this.estado + '\n' +
+                "\tcreado=" + this.creado + '\n' +
+                "\tmodificado=" + this.modificado + '\n' +
                 '}';
     }
 }

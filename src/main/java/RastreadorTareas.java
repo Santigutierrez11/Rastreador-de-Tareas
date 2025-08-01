@@ -18,7 +18,8 @@ public class RastreadorTareas {
             respuesta = Integer.parseInt(in.nextLine());
             switch(respuesta){
                 case 1:
-                    System.out.println("Listar tareas");
+                    System.out.println("* Lista tareas *");
+                    listarTareas();
                     break;
                 case 2:
                     System.out.println("Modificar tarea");
@@ -73,7 +74,28 @@ public class RastreadorTareas {
     }
     
     public static void listarTareas(){
+        ObjectMapper mapper = new ObjectMapper();
+        List<Tareas> tareasLista = new ArrayList<>();
 
+        try {
+            File archivo = new File(FILE_PATH);
+
+            if(archivo.exists() && archivo.length() > 0){
+                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                for(Tareas tarea : tareasLista){
+                    System.out.println("ID: " + tarea.getIdTarea());
+                    System.out.println("\tDescripción: " + tarea.getDescripcion());
+                    System.out.println("\tEstado: " + tarea.getEstado());
+                    System.out.println("\tCreado: " + tarea.getCreado());
+                    System.out.println("\tModificado: " + tarea.getModificado());
+                    System.out.println();
+                }
+            } else {
+                System.out.println("No existes tareas");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void agregarTarea(){
