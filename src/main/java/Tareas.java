@@ -4,13 +4,13 @@ public class Tareas {
     private static int id;
     private String descripcion;
     private String estado;
-    private Date creado;
-    private Date modificado;
+    private String creado;
+    private String modificado;
 
     public Tareas(){
         Tareas.id++;
     }
-    public Tareas(String descripcion, String estado, Date creado, Date modificado){
+    public Tareas(String descripcion, String estado, String creado, String modificado){
         this();
         this.descripcion = descripcion;
         this.estado = estado;
@@ -36,17 +36,17 @@ public class Tareas {
         this.estado = estado;
     }
 
-    public Date getCreado() {
+    public String getCreado() {
         return this.creado;
     }
-    public void setCreado(Date creado) {
+    public void setCreado(String creado) {
         this.creado = creado;
     }
 
-    public Date getModificado() {
+    public String getModificado() {
         return this.modificado;
     }
-    public void setModificado(Date modificado) {
+    public void setModificado(String modificado) {
         this.modificado = modificado;
     }
 
