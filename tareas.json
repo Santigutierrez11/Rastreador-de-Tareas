@@ -6,14 +6,14 @@
   "modificado" : "03/08/2025 20:07:45"
 }, {
   "idTarea" : 2,
-  "descripcion" : "Coeggir codigo rastreador tareas",
+  "descripcion" : "Corregido y modificado - Coeggir codigo rastreador tareas",
   "estado" : "En progreso",
   "creado" : "03/08/2025 20:08:13",
-  "modificado" : "03/08/2025 20:08:13"
+  "modificado" : "03/08/2025 20:53:38"
 }, {
   "idTarea" : 3,
-  "descripcion" : "Prueba",
-  "estado" : "Sin iniciar",
+  "descripcion" : "Prueba 2 - Prueba",
+  "estado" : "Terminada",
   "creado" : "03/08/2025 20:08:30",
-  "modificado" : "03/08/2025 20:08:30"
+  "modificado" : "03/08/2025 20:54:38"
 } ]

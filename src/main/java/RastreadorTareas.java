@@ -23,9 +23,12 @@ public class RastreadorTareas {
                     break;
                 case 2:
                     System.out.println("Modificar tarea");
+                    System.out.print("Ingresa el ID de la tarea: ");
+                    int idTarea = Integer.parseInt(in.nextLine());
+                    modificarTarea(idTarea);
                     break;
                 case 3:
-                    System.out.println("*** Crear tarea ***");
+                    System.out.println("* Crear tarea *");
                     agregarTarea();
                     break;
                 case 4:
@@ -55,9 +58,11 @@ public class RastreadorTareas {
         System.out.print("\nSeleccione una opción: ");
     }
 
-    public static byte estados(){
+    public static String estados(){
         Scanner in = new Scanner(System.in);
         byte respuesta = 0;
+        String estado;
+
         System.out.print("**** Estados de la tareas ****");
         System.out.print("\n+-------------------+");
         System.out.print("\n|1. Sin iniciar   |");
@@ -70,7 +75,26 @@ public class RastreadorTareas {
         } catch (Exception e){
             System.out.println("Error: " + e.getMessage());
         }
-        return respuesta;
+
+        while(true){
+            if(respuesta >= 1 && respuesta <= 3){
+                switch(respuesta){
+                    case 1:
+                        estado = "Sin iniciar";
+                        break;
+                    case 2:
+                        estado = "En progreso";
+                        break;
+                    default:
+                        estado = "Terminada";
+                        break;
+                }
+                break;
+            } else {
+                System.out.println("Opción no valida");
+            }
+        }
+        return estado;
     }
     
     public static void listarTareas(){
@@ -115,33 +139,13 @@ public class RastreadorTareas {
 
             System.out.print("Ingresa la descripción: ");
             String descripcion = in.nextLine();
-            String estado;
 
-            while(true){
-                byte estadoResultado = estados();
-                if(estadoResultado >= 1 && estadoResultado <= 3){
-                    switch(estadoResultado){
-                        case 1:
-                            estado = "Sin iniciar";
-                            break;
-                        case 2:
-                            estado = "En progreso";
-                            break;
-                        default:
-                            estado = "Terminada";
-                            break;
-                    }
-                    break;
-                } else {
-                    System.out.println("Opción no valida");
-                }
-            }
 
             Date fechaActual = new Date();
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             String creado = formatoFecha.format(fechaActual);
 
-            Tareas tarea = new Tareas(idTarea, descripcion, estado, creado, creado);
+            Tareas tarea = new Tareas(idTarea, descripcion, estados(), creado, creado);
             tareasLista.add(tarea);
 
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
@@ -152,8 +156,40 @@ public class RastreadorTareas {
         }
     }
 
-    public static void modificarTarea(){
+    public static void modificarTarea(int idTarea){
+        Scanner in = new Scanner(System.in);
+        ObjectMapper  mapper = new ObjectMapper();
+        List<Tareas> tareasLista = new ArrayList<>();
 
+        try {
+            File archivo = new File(FILE_PATH);
+            Date fechaActual = new Date();
+            SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+            if(archivo.exists() && archivo.length() > 0){
+                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+
+                System.out.print("Ingresa nueva descripcion: ");
+                String descripcion = in.nextLine();
+
+                for(Tareas tarea : tareasLista){
+                    if(tarea.getIdTarea() == idTarea){
+                        tarea.setDescripcion(descripcion + " - " + tarea.getDescripcion());
+                        tarea.setEstado(estados());
+                        tarea.setModificado(formatoFecha.format(fechaActual));
+                    }
+                }
+
+                mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
+                System.out.println("Tarea actualizada :)");
+            } else {
+                System.out.println("No existen tareas");
+            }
+
+        } catch (IOException e){
+            System.err.println("Error al procesar el archivo: JSON: ");
+            e.printStackTrace();
+        }
     }
 
     public static void eliminarTarea(){
