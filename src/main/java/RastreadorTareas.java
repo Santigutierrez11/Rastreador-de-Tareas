@@ -3,6 +3,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
@@ -83,17 +85,11 @@ public class RastreadorTareas {
 
         while(true){
             if(respuesta >= 1 && respuesta <= 3){
-                switch(respuesta){
-                    case 1:
-                        estado = "Sin iniciar";
-                        break;
-                    case 2:
-                        estado = "En progreso";
-                        break;
-                    default:
-                        estado = "Terminada";
-                        break;
-                }
+                estado = switch (respuesta) {
+                    case 1 -> "Sin iniciar";
+                    case 2 -> "En progreso";
+                    default -> "Terminada";
+                };
                 break;
             } else {
                 System.out.println("Opción no valida");
@@ -103,14 +99,15 @@ public class RastreadorTareas {
     }
     
     public static void listarTareas(){
+        final Logger logger = Logger.getLogger(RastreadorTareas.class.getName());
         ObjectMapper mapper = new ObjectMapper();
-        List<Tareas> tareasLista = new ArrayList<>();
+        List<Tareas> tareasLista;
 
         try {
             File archivo = new File(FILE_PATH);
 
             if(archivo.exists() && archivo.length() > 0){
-                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                tareasLista = mapper.readValue(archivo, new TypeReference<>() {});
                 for(Tareas tarea : tareasLista){
                     System.out.println("ID: " + tarea.getIdTarea());
                     System.out.println("\tDescripción: " + tarea.getDescripcion());
@@ -122,12 +119,13 @@ public class RastreadorTareas {
             } else {
                 System.out.println("No existes tareas");
             }
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (Exception e){
+            logger.log(Level.SEVERE, "Error: " + e.getMessage());
         }
     }
 
     public static void agregarTarea(){
+        final Logger logger = Logger.getLogger(RastreadorTareas.class.getName());
         Scanner in = new Scanner(System.in);
         int idTarea = 1;
         ObjectMapper mapper = new ObjectMapper();
@@ -137,7 +135,7 @@ public class RastreadorTareas {
             File archivo = new File(FILE_PATH);
 
             if(archivo.exists() && archivo.length() > 0){
-                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                tareasLista = mapper.readValue(archivo, new TypeReference<>() {});
                 Tareas ultimaTarea = tareasLista.getLast();
                 idTarea = ultimaTarea.getIdTarea() + 1;
             }
@@ -155,16 +153,16 @@ public class RastreadorTareas {
 
             mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
             System.out.println("Tarea agregada :)");
-        } catch (IOException e){
-            System.err.println("Error al procesar el archivo: JSON: ");
-            e.printStackTrace();
+        } catch (Exception e){
+            logger.log(Level.SEVERE, "Error: " + e.getMessage());
         }
     }
 
     public static void modificarTarea(int idTarea){
+        final Logger logger = Logger.getLogger(RastreadorTareas.class.getName());
         Scanner in = new Scanner(System.in);
         ObjectMapper  mapper = new ObjectMapper();
-        List<Tareas> tareasLista = new ArrayList<>();
+        List<Tareas> tareasLista;
 
         try {
             File archivo = new File(FILE_PATH);
@@ -172,7 +170,7 @@ public class RastreadorTareas {
             SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
             if(archivo.exists() && archivo.length() > 0){
-                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                tareasLista = mapper.readValue(archivo, new TypeReference<>() {});
 
                 System.out.print("Ingresa nueva descripcion: ");
                 String descripcion = in.nextLine();
@@ -192,19 +190,19 @@ public class RastreadorTareas {
             }
 
         } catch (IOException e){
-            System.err.println("Error al procesar el archivo: JSON: ");
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error: " + e.getMessage());
         }
     }
 
     public static void eliminarTarea(int idTarea){
+        final Logger logger = Logger.getLogger(RastreadorTareas.class.getName());
         ObjectMapper  mapper = new ObjectMapper();
-        List<Tareas> tareasLista = new ArrayList<>();
+        List<Tareas> tareasLista;
 
         try {
             File archivo = new File(FILE_PATH);
             if(archivo.exists() && archivo.length() > 0){
-                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                tareasLista = mapper.readValue(archivo, new TypeReference<>() {});
                 tareasLista.removeIf(t -> t.getIdTarea() == idTarea);
 
                 mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
@@ -213,8 +211,8 @@ public class RastreadorTareas {
             } else {
                 System.out.println("No existen tareas");
             }
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (Exception e){
+            logger.log(Level.SEVERE, "Error: " + e.getMessage());
         }
     }
 }
