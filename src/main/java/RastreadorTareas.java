@@ -13,37 +13,42 @@ public class RastreadorTareas {
         Scanner in = new Scanner(System.in);
         int respuesta;
 
-        do {
-            menu();
-            respuesta = Integer.parseInt(in.nextLine());
-            switch(respuesta){
-                case 1:
-                    System.out.println("* Lista tareas *");
-                    listarTareas();
-                    break;
-                case 2:
-                    System.out.println("Modificar tarea");
-                    System.out.print("Ingresa el ID de la tarea: ");
-                    int idTarea = Integer.parseInt(in.nextLine());
-                    modificarTarea(idTarea);
-                    break;
-                case 3:
-                    System.out.println("* Crear tarea *");
-                    agregarTarea();
-                    break;
-                case 4:
-                    System.out.println("Eliminar tarea");
-                    break;
-                case 5:
-                    System.out.println("Adios...");
-                    break;
-                default:
-                    System.out.println("Opcion invalida");
-            }
-            System.out.println();
-        } while (respuesta != 5);
-
-
+        try {
+            do {
+                menu();
+                respuesta = Integer.parseInt(in.nextLine());
+                switch (respuesta) {
+                    case 1:
+                        System.out.println("* Lista tareas *");
+                        listarTareas();
+                        break;
+                    case 2:
+                        System.out.println("* Modificar tarea *");
+                        System.out.print("Ingresa el ID de la tarea: ");
+                        int idTareaModificar = Integer.parseInt(in.nextLine());
+                        modificarTarea(idTareaModificar);
+                        break;
+                    case 3:
+                        System.out.println("* Crear tarea *");
+                        agregarTarea();
+                        break;
+                    case 4:
+                        System.out.println("* Eliminar tarea *");
+                        System.out.print("Ingresa el ID de la tarea: ");
+                        int idTareaEliminar = Integer.parseInt(in.nextLine());
+                        eliminarTarea(idTareaEliminar);
+                        break;
+                    case 5:
+                        System.out.println("Adios...");
+                        break;
+                    default:
+                        System.out.println("Opcion invalida");
+                }
+                System.out.println();
+            } while (respuesta != 5);
+        } catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     public static void menu(){
@@ -192,7 +197,24 @@ public class RastreadorTareas {
         }
     }
 
-    public static void eliminarTarea(){
+    public static void eliminarTarea(int idTarea){
+        ObjectMapper  mapper = new ObjectMapper();
+        List<Tareas> tareasLista = new ArrayList<>();
 
+        try {
+            File archivo = new File(FILE_PATH);
+            if(archivo.exists() && archivo.length() > 0){
+                tareasLista = mapper.readValue(archivo, new TypeReference<List<Tareas>>() {});
+                tareasLista.removeIf(t -> t.getIdTarea() == idTarea);
+
+                mapper.writerWithDefaultPrettyPrinter().writeValue(archivo, tareasLista);
+
+                System.out.println("Tarea eliminada :)");
+            } else {
+                System.out.println("No existen tareas");
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
