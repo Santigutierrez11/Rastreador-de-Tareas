@@ -4,9 +4,7 @@
 
 ## :clipboard: Rastreador de Tareas
 
-<p>
-  Es un proyecto que te permite rastrear y gestionar tus tareas. En esta tarea, crearás una interfaz de línea de comandos (CLI) sencilla para rastrear tus tareas pendientes, las realizadas y las en las que estás    trabajando actualmente. Este proyecto te ayudará a practicar tus habilidades de programación, incluyendo el manejo del sistema de archivos, la gestión de entradas de usuario y la creación de una aplicación CLI    sencilla.
-<p/>
+### Es un [proyecto](https://roadmap.sh/projects/task-tracker) que te permite rastrear y gestionar tus tareas. En esta tarea, crearás una interfaz de línea de comandos (CLI) sencilla para rastrear tus tareas pendientes, las realizadas y las en las que estás trabajando actualmente. Este proyecto te ayudará a practicar tus habilidades de programación, incluyendo el manejo del sistema de archivos, la gestión de entradas de usuario y la creación de una aplicación CLI sencilla.
 
 ## :gear: Funcionalidades
 - Agregar, actualizar y eliminar tareas en un archivo JSON.
