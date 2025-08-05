@@ -21,8 +21,22 @@ public class RastreadorTareas {
                 respuesta = Integer.parseInt(in.nextLine());
                 switch (respuesta) {
                     case 1:
-                        System.out.println("* Lista tareas *");
-                        listarTareas();
+                        System.out.print("* Lista tareas *");
+                        System.out.print("\n+---------------+");
+                        System.out.print("\n|1. Todas       |");
+                        System.out.print("\n|2. Sin iniciar |");
+                        System.out.print("\n|3. En proceso  |");
+                        System.out.print("\n|4. Terminadas  |");
+                        System.out.print("\n+---------------+");
+                        System.out.print("\nSeleccione una opción: ");
+                        byte respuestaListar =  Byte.parseByte(in.nextLine());
+                        switch (respuestaListar){
+                            case 1 -> listarTareas("Todas");
+                            case 2 -> listarTareas("Sin iniciar");
+                            case 3 -> listarTareas("En progreso");
+                            case 4 -> listarTareas("Terminada");
+                            default -> System.out.println("Opcion invalida...");
+                        }
                         break;
                     case 2:
                         System.out.println("* Modificar tarea *");
@@ -73,7 +87,7 @@ public class RastreadorTareas {
         System.out.print("**** Estados de la tareas ****");
         System.out.print("\n+-------------------+");
         System.out.print("\n|1. Sin iniciar   |");
-        System.out.print("\n|2. En progreso |");
+        System.out.print("\n|2. En progreso   |");
         System.out.print("\n|3. Terminada     |");
         System.out.println("\n+-------------------+");
         System.out.print("\nSeleccione una opción: ");
@@ -98,7 +112,7 @@ public class RastreadorTareas {
         return estado;
     }
     
-    public static void listarTareas(){
+    public static void listarTareas(String estado){
         final Logger logger = Logger.getLogger(RastreadorTareas.class.getName());
         ObjectMapper mapper = new ObjectMapper();
         List<Tareas> tareasLista;
@@ -108,6 +122,9 @@ public class RastreadorTareas {
 
             if(archivo.exists() && archivo.length() > 0){
                 tareasLista = mapper.readValue(archivo, new TypeReference<>() {});
+                if (!estado.equals("Todas")){
+                    tareasLista.removeIf(t -> !t.getEstado().equalsIgnoreCase(estado));
+                }
                 for(Tareas tarea : tareasLista){
                     System.out.println("ID: " + tarea.getIdTarea());
                     System.out.println("\tDescripción: " + tarea.getDescripcion());

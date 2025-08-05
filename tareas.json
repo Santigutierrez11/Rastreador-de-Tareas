@@ -10,4 +10,16 @@
   "estado" : "En progreso",
   "creado" : "03/08/2025 20:08:13",
   "modificado" : "03/08/2025 20:53:38"
+}, {
+  "idTarea" : 3,
+  "descripcion" : "Prueba",
+  "estado" : "Sin iniciar",
+  "creado" : "04/08/2025 22:27:41",
+  "modificado" : "04/08/2025 22:27:41"
+}, {
+  "idTarea" : 4,
+  "descripcion" : "Prueba otra",
+  "estado" : "Terminada",
+  "creado" : "04/08/2025 22:28:06",
+  "modificado" : "04/08/2025 22:28:06"
 } ]
